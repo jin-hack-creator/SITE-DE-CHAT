@@ -80,7 +80,7 @@ npm run dev
 
 Toute activité suspecte doit être signalée :
 - Par email : sasaki-compagnie@mail.com
-- Via WhatsApp : +242 06 727 4660 (ChanJinhuyk) ou +242 04 414 8217 (kingjr7)
+- (Via WhatsApp) [+242 06 727 4660 ](ChanJinhuyk)  [+242 04 414 8217 ](kingjr7)
 
 Nous utilisons des systèmes de :
 - Détection automatique de forks (GitGuardian)
