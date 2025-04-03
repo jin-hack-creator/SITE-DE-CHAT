@@ -76,5 +76,12 @@ npm run dev
 
 <div align="center" style="margin: 20px 0;"> <p>Pour toute collaboration professionnelle :</p> <a href="mailto:sasaki-compagnie@mail.com" style="text-decoration: none;"> <img src="https://img.shields.io/badge/📧_Email-sasaki--compagnie@mail.com-red?style=for-the-badge" alt="Email" style="margin: 10px;"> </a> <a href="https://whatsapp.com/channel/0029Vajrhmz96H4IsEjh4a41" style="text-decoration: none;"> <img src="https://img.shields.io/badge/💬_WhatsApp_Chaîne-Rejoindre-green?style=for-the-badge" alt="WhatsApp" style="margin: 10px;"> </a> </div>
 
-📜 Licence
-Ce projet est sous licence MIT - Interdiction d'apporter quelconque modification à ce repos
+# Politique de Sécurité Juridique
+
+Toute activité suspecte doit être signalée :
+- Par email : sasaki-compagnie@mail.com
+- Via WhatsApp : +242 06 727 4660 (ChanJinhuyk) ou +242 04 414 8217 (kingjr7)
+
+Nous utilisons des systèmes de :
+- Détection automatique de forks (GitGuardian)
+- Watermarking numérique du code
