@@ -1,3 +1,8 @@
+/* 
+* © 2025 ChanJinhuyk & kingjr7 - Logiciel propriétaire
+* ID de suivi : SASKI-[hash]-[date]
+* Toute utilisation non autorisée sera automatiquement tracée
+*/
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, View, Button, ScrollView } from 'react-native';
 import io from 'socket.io-client';
