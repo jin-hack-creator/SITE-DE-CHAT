@@ -1,0 +1,179 @@
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  background-color: #0078d7;
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+main {
+  flex: 1; /* Permet au contenu de prendre tout l'espace disponible */
+  padding: 1rem;
+}
+
+/* Conteneur principal du chat */
+#chat {
+  max-width: 600px;
+  margin: 2rem auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 500px; /* Hauteur fixe pour le chat */
+}
+
+/* Zone où les messages s'affichent */
+#messages {
+  flex: 1; /* Prend tout l'espace disponible */
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background: #f9f9f9;
+  border-radius: 5px;
+}
+
+/* Style des messages */
+#messages div {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  background-color: #e1f5fe; /* Couleur des messages */
+  color: #333;
+  font-size: 0.9rem;
+  word-wrap: break-word;
+}
+
+/* Style des messages envoyés par l'utilisateur */
+#messages .my-message {
+  background-color: #0078d7;
+  color: white;
+  text-align: right;
+}
+
+/* Zone d'entrée des messages */
+#message-input {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Champ de saisie */
+#message {
+  flex: 1;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+/* Bouton d'envoi */
+#send {
+  padding: 0.8rem 1rem;
+  background-color: #0078d7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+#send:hover {
+  background-color: #005bb5;
+}
+
+/* Scroll automatique pour les messages */
+#messages::-webkit-scrollbar {
+  width: 8px;
+}
+
+#messages::-webkit-scrollbar-thumb {
+  background-color: #0078d7;
+  border-radius: 5px;
+}
+
+/* Styles pour la page de connexion */
+.login-container {
+  text-align: center;
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 400px;
+  margin: auto;
+}
+
+.login-container h1 {
+  margin-bottom: 1rem;
+  color: #0078d7;
+}
+
+.login-container input {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.login-container button {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #0078d7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.login-container button:hover {
+  background-color: #005bb5;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  background-color: #0078d7;
+  color: white;
+  padding: 1rem 0;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  #chat {
+    width: 90%;
+  }
+
+  .login-container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  #message-input {
+    flex-direction: column;
+  }
+
+  #send {
+    width: 100%;
+  }
+}
