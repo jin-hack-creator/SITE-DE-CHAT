@@ -1,3 +1,9 @@
+/* 
+* © 2025 ChanJinhuyk & kingjr7 - Logiciel propriétaire
+* ID de suivi : SASKI-[hash]-[date]
+* Toute utilisation non autorisée sera automatiquement tracée
+*/
+
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
