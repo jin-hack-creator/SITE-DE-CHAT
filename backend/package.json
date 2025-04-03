@@ -1,0 +1,13 @@
+{
+  "name": "bluevision-backend",
+  "version": "1.0.0",
+  "description": "Backend pour le site et l'application BLUEVISION",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.5.4"
+  }
+}
