@@ -1,4 +1,4 @@
-const socket = io();
+// const socket = io();
 
 const email = localStorage.getItem('email');
 const username = localStorage.getItem('username');
@@ -24,6 +24,20 @@ const sendButton = document.getElementById('send');
 sendButton.addEventListener('click', () => {
   const message = messageInput.value.trim();
   if (message) {
+    fetch('/send-message', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, message })
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erreur lors de l\'envoi du message');
+      }
+      return response.json();
+    })
+
     // Ajouter le message de l'utilisateur dans la zone de chat
     const messageElement = document.createElement('div');
     messageElement.textContent = `Vous : ${message}`;
@@ -31,16 +45,16 @@ sendButton.addEventListener('click', () => {
     messagesDiv.appendChild(messageElement);
 
     // Envoyer le message au serveur
-    socket.emit('chat message', `${username}: ${message}`);
+    // socket.emit('chat message', `${username}: ${message}`);
     messageInput.value = '';
     messagesDiv.scrollTop = messagesDiv.scrollHeight; // Scroll automatique
   }
 });
 
 // Réception d'un message
-socket.on('chat message', (msg) => {
-  const messageElement = document.createElement('div');
-  messageElement.textContent = msg;
-  messagesDiv.appendChild(messageElement);
-  messagesDiv.scrollTop = messagesDiv.scrollHeight; // Scroll automatique
-});
+// socket.on('chat message', (msg) => {
+//   const messageElement = document.createElement('div');
+//   messageElement.textContent = msg;
+//   messagesDiv.appendChild(messageElement);
+//   messagesDiv.scrollTop = messagesDiv.scrollHeight; // Scroll automatique
+// });

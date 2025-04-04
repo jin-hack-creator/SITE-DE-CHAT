@@ -1,66 +1,85 @@
-/* 
-* © 2025 ChanJinhuyk & kingjr7 - Logiciel propriétaire
-* ID de suivi : SASKI-[hash]-[date]
-* Toute utilisation non autorisée sera automatiquement tracée
-*/
+const express = require('express')
+const http = require('http')
+const cors = require('cors')
+const WebSocket = require('ws')
 
-const express = require('express');
-const http = require('http');
-const { Server } = require('socket.io');
-const path = require('path');
-const nodemailer = require('nodemailer');
+const app = express()
+const server = http.createServer(app)
 
-const app = express();
-const server = http.createServer(app);
-const io = new Server(server);
+const wss = new WebSocket.Server({ server })
 
-// Servir les fichiers frontend
-app.use(express.static(path.join(__dirname, '../frontend')));
 
-// Configuration de Nodemailer
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'sasaki-compagnie@gmail.com', // Adresse email de l'expéditeur
-    pass: 'votre_mot_de_passe_email'    // Mot de passe de l'email
+wss.on("connection", (ws) => {
+  console.log("Nouveau client connécter");
+
+  ws.on("message", (message) => {
+    console.log("Message reçu:", message);
+    
+  })
+
+  ws.on("close", () => { 
+    console.log("Client déconnecté");
+  })
+})
+
+
+app.use(cors())
+app.use(express.json())
+
+
+const createClient = require("@supabase/supabase-js")
+
+const supabaseUrl = 'https://pxldlplqpshfigfejuam.supabase.co'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bGRscGxxcHNoZmlnZmVqdWFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI0NTU0MTgsImV4cCI6MjA1ODAzMTQxOH0.9_xwVw5dUk3eIEte2uQzuqaAyAi-YXqPKpFNRFXv-3c'
+const supabase = createClient.createClient(supabaseUrl, supabaseKey)
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
+app.get('/get-messages', async (req, res) => {
+  const { data, error } = await supabase.from('messages').select()
+  
+  if (error) {
+    console.error('Erreur lors de la récupération des messages :', error);
+    return res.status(500).json({ error: 'Erreur lors de la récupération des messages' });
   }
-});
 
-// Route pour envoyer un email de confirmation
-app.post('/send-confirmation', express.json(), (req, res) => {
-  const { email, username } = req.body;
+  res.status(200).json(data)
+}
+)
 
-  const mailOptions = {
-    from: 'sasaki-compagnie@gmail.com',
-    to: email,
-    subject: 'Confirmation de votre inscription à BLUEVISION',
-    text: `Bonjour ${username},\n\nMerci de vous être inscrit sur BLUEVISION. Votre compte est maintenant actif.\n\nCordialement,\nL'équipe BLUEVISION`
-  };
+app.post('/send-message', async (req, res) => {
+  const { message, pseudo} = req.body;
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error(error);
-      res.status(500).send('Erreur lors de l\'envoi de l\'email.');
-    } else {
-      console.log('Email envoyé : ' + info.response);
-      res.status(200).send('Email de confirmation envoyé.');
+  const {Inserterror} = await supabase.from('messages').insert({
+    content: message,
+    pseudo: pseudo,
+  });
+
+  if (Inserterror) {
+    console.error('Erreur lors de l\'insertion du message :', error);
+    return res.status(500).json({ error: 'Erreur lors de l\'insertion du message' });
+  }
+
+  const {data, error} = await supabase.from('messages').select()
+  
+  if (error) {
+    console.error('Erreur lors de la récupération des messages :', error);
+    return res.status(500).json({ error: 'Erreur lors de la récupération des messages' });
+  }
+  
+  // Envoyer le message à tous les clients connectés
+  wss.clients.forEach(client => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify(data));
     }
   });
-});
+  res.status(200).json(data);
+})
 
-io.on('connection', (socket) => {
-  console.log('Un utilisateur est connecté');
+const port = 3000
 
-  // Réception d'un message
-  socket.on('chat message', (msg) => {
-    io.emit('chat message', msg); // Diffuser le message à tous les utilisateurs
-  });
-
-  socket.on('disconnect', () => {
-    console.log('Un utilisateur s\'est déconnecté');
-  });
-});
-
-server.listen(3000, () => {
-  console.log('Serveur en écoute sur http://localhost:3000');
-});
+server.listen(port, () => {
+  console.log(`serveur en écoute sur le port ${port}`)
+})
