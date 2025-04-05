@@ -12,7 +12,7 @@ export default function Login() {
     const login = async (e) => {
         e.preventDefault();
 
-        await fetch("http://localhost:3000/login", {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}login`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -42,6 +42,7 @@ export default function Login() {
             })
             .catch((error) => {
               console.error("Erreur lors du fetch :", error.message);
+              alert("compte non valide")
             });
           
     }

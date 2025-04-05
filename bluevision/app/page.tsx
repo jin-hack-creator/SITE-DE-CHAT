@@ -17,7 +17,7 @@ export default function Home() {
   const ws = useRef(null);
 
   useEffect(() => {
-    ws.current = new WebSocket("ws://localhost:3000/ws");
+    ws.current = new WebSocket(process.env.NEXT_PUBLIC_WEBSOCKET_URL);
 
     ws.current.onmessage = (event) => {
       const data = JSON.parse(event.data);
@@ -28,7 +28,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:3000/get-messages", {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}get-messages`, {
       method: "GET",
       credentials: 'include',
     })
@@ -39,6 +39,7 @@ export default function Home() {
       })
       .catch((error) => {
         console.error("Error:", error);
+        alert("erreur lors de la récupération des messages")
       });
 
     // Nettoyage à la destruction du composant
@@ -49,7 +50,7 @@ export default function Home() {
     };
   }, []);
   const sendMessage = () => {
-    fetch("http://localhost:3000/send-message", {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}send-message`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -67,6 +68,7 @@ export default function Home() {
       })
       .catch((error) => {
         console.error("Error:", error);
+        alert("erreur lors de l'envoi du message ")
       });
   };
 
